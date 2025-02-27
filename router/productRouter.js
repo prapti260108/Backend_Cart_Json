@@ -4,7 +4,7 @@ const { addProduct,getAllProduct,deleteProduct,updateProduct} = require("../cont
 const router = express.Router()
 
 // Add a new product
-router.post("/product", addProduct)
+router.post("/Addproduct", addProduct)
 // Get all products
 router.get("/AllProduct", getAllProduct)
 // Delete a product
