@@ -33,6 +33,7 @@ exports.login = async (req,res)=>{
         const check = await user.findOne({
             email:email
         })      
+
         if(!check){
             return res.status(400).json({message:"Invalid email"})
         }
@@ -40,8 +41,9 @@ exports.login = async (req,res)=>{
         if(!checkPassword){
             return res.status(400).json({message:"Invalid password"})
         }
-        const token = jwt.sign({id:check._id},"secretkey")
+        const token = jwt.sign({id:check._id},"secretkey", {expiresIn:"1h"}) 
         res.status(200).json({message:"Login successfully",token})
+
     }
     catch (error) {
         res.status(500).json({message:"Internal server error"})

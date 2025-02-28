@@ -3,10 +3,12 @@ const product = require("../model/productModel");
 
 exports.addToCart = async (req, res) => {
     try {
+        console.log("Request Body:", req.body);  // Debugging ke liye
+
         const { userId, products } = req.body;
 
-        if (!userId || !products || !Array.isArray(products)) {
-            return res.status(400).json({ message: "User ID and Products array required" });
+        if (!userId || !products) {
+            return res.status(400).json({ message: "Invalid request body" });
         }
 
         let cart = await Cart.findOne({ userId });
@@ -16,24 +18,23 @@ exports.addToCart = async (req, res) => {
         }
 
         products.forEach(({ productId, quantity }) => {
-            const qty = Number(quantity) || 1; 
-
-            const productIndex = cart.products.findIndex(p => p.productId.toString() === productId.toString());
-
-            if (productIndex > -1) {
-                cart.products[productIndex].quantity += qty;
+            const existingProduct = cart.products.find(p => p.productId.toString() === productId.toString());
+            if (existingProduct) {
+                existingProduct.quantity += quantity;
             } else {
-                cart.products.push({ productId, quantity: qty });
+                cart.products.push({ productId, quantity });
             }
         });
 
         await cart.save();
-        res.json({ message: "Products added to cart", cart });
+        res.json({ message: "Product added to cart", cart });
 
     } catch (error) {
+        console.error("Error:", error);
         res.status(500).json({ message: error.message });
     }
 };
+
 
 
 

@@ -3,11 +3,12 @@ const db = require("./config/db")
 const userRouter = require("./router/userRouter")
 const productRouter = require("./router/productRouter")
 const AddToCartRouter = require("./router/AddToCartRouter");
+const cookieParser = require("cookie-parser");
 const cors = require("cors")
 
 
-
 const app = express()
+app.use(cookieParser());
 app.use(cors())
 app.use(express.json())
 
@@ -24,6 +25,6 @@ app.get("/", (req, res) => {
 
 
 // server connection
-app.listen(6765, () => {
+app.listen(7766, () => {
     console.log("server is listen on port 6765")
 })

@@ -1,14 +1,17 @@
 const jwt = require("jsonwebtoken")
 
 const authenticate = (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];  // Bearer <token>
+console.log(token)  
 
     if (!token) {
         return res.status(401).send({ message: "Authentication required" });
     }
 
     try {
-        constdecoded = jwt.verify(token, "private-key");
+
+        const decoded = jwt.verify(token, "secretkey");
         req.user = decoded;
         next();
     } catch (error) {
