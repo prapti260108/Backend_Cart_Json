@@ -12,9 +12,12 @@ title:{
     description:{
         type:String,
         required:true
+    },
+    image:{
+        type:String
     }
 })
 
-const productModel = mongoose.model("product",productSchema)
+const productModel = mongoose.model("Product",productSchema)
 
 module.exports = productModel

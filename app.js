@@ -7,10 +7,17 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors")
 
 
+
 const app = express()
 app.use(cookieParser());
 app.use(cors())
 app.use(express.json())
+
+
+app.use("/uploads", express.static("uploads"));
+
+
+
 
 // user router
 app.use("/user", userRouter)
@@ -26,5 +33,5 @@ app.get("/", (req, res) => {
 
 // server connection
 app.listen(7766, () => {
-    console.log("server is listen on port 6765")
+    console.log("server is listen on port 7766")
 })
